@@ -1,0 +1,13 @@
+{
+  "name": "projeto-docker-so",
+  "version": "1.0.0",
+  "description": "Aplicação Node.js para avaliação de Sistemas Operacionais",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "mysql2": "^3.11.0"
+  }
+}

@@ -1,0 +1,53 @@
+services:
+  # Serviço da aplicação Node.js
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: app-nodejs
+    ports:
+      - "3000:3000"
+    environment:
+      - ALUNO_NOME=Eduardo Felipe de Oliveira
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root123
+      - DB_NAME=projeto_so
+    networks:
+      - rede-projeto
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    mem_limit: 128m
+    restart: unless-stopped
+
+  # Serviço do banco de dados MySQL
+  db:
+    image: mysql:8.0
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=projeto_so
+    volumes:
+      - dados-mysql:/var/lib/mysql
+    networks:
+      - rede-projeto
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    mem_limit: 128m
+    restart: unless-stopped
+
+# Rede Docker dedicada
+networks:
+  rede-projeto:
+    driver: bridge
+
+# Volume persistente para o banco de dados
+volumes:
+  dados-mysql:
+    driver: local
